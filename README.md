@@ -1,2 +1,2 @@
 # Git_learning
-this project is for learning git 
+this project is for learning gitt
