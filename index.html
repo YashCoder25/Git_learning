@@ -1,1 +1,357 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git · what & how</title>
+    <!-- Font Awesome for icons (optional but nice) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f6f9fc 0%, #e9f2f7 100%);
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            margin: 0;
+        }
+
+        .git-card {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 48px;
+            padding: 2.5rem 2.8rem;
+            box-shadow: 0 30px 60px -20px rgba(0, 20, 30, 0.4),
+                        0 8px 20px rgba(0,0,0,0.04);
+            border: 1px solid rgba(255,255,255,0.5);
+            transition: all 0.2s ease;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #1e2b37;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-bottom: 3px solid #f05138;
+            padding-bottom: 0.6rem;
+            margin-bottom: 2rem;
+        }
+
+        h1 i {
+            color: #f05138;
+            font-size: 2.6rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1f2e3b;
+            margin: 2rem 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        h2 i {
+            color: #f05138;
+            font-size: 1.6rem;
+            width: 2rem;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2e3b;
+            margin-top: 1.6rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h3 i {
+            color: #f05138;
+            font-size: 1.2rem;
+            width: 1.6rem;
+        }
+
+        p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #1f2e3b;
+            margin-bottom: 0.75rem;
+        }
+
+        .highlight-box {
+            background: #ffffffcc;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 28px;
+            padding: 1.8rem 2.2rem;
+            margin: 1.8rem 0;
+            border: 1px solid #ffffff;
+            box-shadow: 0 6px 18px rgba(0, 20, 30, 0.06);
+        }
+
+        .code-block {
+            background: #1e2b37;
+            color: #e4f0f7;
+            padding: 1.2rem 1.8rem;
+            border-radius: 20px;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.95rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            margin: 1.2rem 0;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
+            border-left: 6px solid #f05138;
+        }
+
+        .code-block i {
+            color: #f7b731;
+            margin-right: 6px;
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .pill {
+            background: #ffffffd0;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 40px;
+            padding: 1.2rem 1.8rem;
+            border: 1px solid #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+
+        .pill i {
+            color: #f05138;
+            margin-right: 0.6rem;
+            width: 1.6rem;
+        }
+
+        .git-badge {
+            display: inline-block;
+            background: #f05138;
+            color: white;
+            font-weight: 600;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            letter-spacing: 0.3px;
+            margin-right: 0.5rem;
+        }
+
+        hr {
+            border: none;
+            height: 2px;
+            background: linear-gradient(90deg, #f0513840, #f05138, #f0513840);
+            margin: 2.2rem 0 1rem 0;
+            opacity: 0.3;
+        }
+
+        .footer-note {
+            margin-top: 2rem;
+            font-size: 0.95rem;
+            color: #1f2e3b;
+            opacity: 0.7;
+            text-align: center;
+            border-top: 1px solid #dce8ef;
+            padding-top: 1.6rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-note i {
+            color: #f05138;
+        }
+
+        @media (max-width: 720px) {
+            .git-card {
+                padding: 1.8rem 1.2rem;
+                border-radius: 32px;
+            }
+            h1 {
+                font-size: 2.2rem;
+            }
+            .grid-2col {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .code-block {
+                font-size: 0.85rem;
+                padding: 1rem;
+            }
+        }
+
+        /* small decorative */
+        .icon-git {
+            background: #f05138;
+            color: white;
+            border-radius: 30px;
+            padding: 0.2rem 0.9rem;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .inline-code {
+            background: #1e2b3715;
+            padding: 0.1rem 0.6rem;
+            border-radius: 12px;
+            font-family: monospace;
+            font-weight: 500;
+            color: #c6412b;
+        }
+    </style>
+</head>
+<body>
+    <div class="git-card">
+        <h1>
+            <i class="fab fa-git-alt"></i> 
+            Git · version control
+        </h1>
+        <!-- what is git -->
+        <section>
+            <h2><i class="fas fa-question-circle"></i> What is Git?</h2>
+            <div class="highlight-box">
+                <p><span class="git-badge">core</span> <strong>Git</strong> is a <strong>distributed version control system</strong> that tracks changes in your files and coordinates work among multiple people. 
+                It’s the backbone of modern software development — used by millions to manage source code, collaborate, and keep history.</p>
+                <p><i class="fas fa-check-circle" style="color:#2a9d8f; margin-right:8px;"></i> <strong>Key features:</strong> snapshots, branching, merging, staging area, distributed workflows, and <strong>everyone has a full copy</strong> of the repository.</p>
+                <p><i class="fas fa-code-branch" style="color:#f05138; margin-right:8px;"></i> Created by Linus Torvalds in 2005, Git is <strong>free, open-source</strong>, and incredibly fast.</p>
+            </div>
+        </section>
+
+        <!-- why git -->
+        <section>
+            <h2><i class="fas fa-rocket"></i> Why use Git?</h2>
+            <div class="grid-2col">
+                <div class="pill"><i class="fas fa-history"></i> <strong>Track everything</strong> — every change, who made it, and when.</div>
+                <div class="pill"><i class="fas fa-code-branch"></i> <strong>Branch & merge</strong> — experiment without breaking the main code.</div>
+                <div class="pill"><i class="fas fa-users"></i> <strong>Collaborate</strong> — multiple developers work simultaneously.</div>
+                <div class="pill"><i class="fas fa-undo-alt"></i> <strong>Revert</strong> — go back to any previous state in seconds.</div>
+            </div>
+        </section>
+
+        <!-- how to use: basics -->
+        <h2><i class="fas fa-terminal"></i> How to use Git (basics)</h2>
+        <p><i class="fas fa-info-circle" style="color:#f05138;"></i> Below are the most common commands to get you started. 
+        All commands are run in your terminal (or Git Bash on Windows).</p>
+
+        <!-- step 1: install & config -->
+        <h3><i class="fas fa-download"></i> 1. Install &amp; configure</h3>
+        <div class="code-block">
+            <i class="fas fa-terminal"></i>  # check if Git is installed<br>
+            git --version<br><br>
+            <i class="fas fa-terminal"></i>  # set your identity (required for commits)<br>
+            git config --global user.name "Your Name"<br>
+            git config --global user.email "you@example.com"
+        </div>
+
+        <!-- step 2: init or clone -->
+        <h3><i class="fas fa-folder-open"></i> 2. Start a new repo or clone</h3>
+        <div class="code-block">
+            <i class="fas fa-terminal"></i>  # create a new repository in the current folder<br>
+            git init<br><br>
+            <i class="fas fa-terminal"></i>  # clone an existing repository from remote<br>
+            git clone https://github.com/user/repo.git
+        </div>
+
+        <!-- step 3: basic workflow -->
+        <h3><i class="fas fa-arrows-spin"></i> 3. Basic workflow (add, commit, push)</h3>
+        <div class="code-block">
+            <i class="fas fa-terminal"></i>  # see what's changed<br>
+            git status<br><br>
+            <i class="fas fa-terminal"></i>  # stage changes (add files to the snapshot)<br>
+            git add filename       # stage a specific file<br>
+            git add .              # stage all changes<br><br>
+            <i class="fas fa-terminal"></i>  # commit — save a permanent snapshot<br>
+            git commit -m "meaningful message"<br><br>
+            <i class="fas fa-terminal"></i>  # push to remote (like GitHub)<br>
+            git push origin main   # or 'master' for older repos
+        </div>
+
+        <!-- step 4: branching & merging -->
+        <h3><i class="fas fa-code-branch"></i> 4. Branching &amp; merging</h3>
+        <div class="code-block">
+            <i class="fas fa-terminal"></i>  # list branches<br>
+            git branch<br><br>
+            <i class="fas fa-terminal"></i>  # create a new branch<br>
+            git branch feature-xyz<br><br>
+            <i class="fas fa-terminal"></i>  # switch to that branch<br>
+            git checkout feature-xyz    # or: git switch feature-xyz<br><br>
+            <i class="fas fa-terminal"></i>  # merge feature-xyz into main<br>
+            git checkout main<br>
+            git merge feature-xyz
+        </div>
+
+        <!-- step 5: pull & fetch -->
+        <h3><i class="fas fa-cloud-download-alt"></i> 5. Stay up to date</h3>
+        <div class="code-block">
+            <i class="fas fa-terminal"></i>  # download changes from remote (but don't merge)<br>
+            git fetch<br><br>
+            <i class="fas fa-terminal"></i>  # download AND merge into your current branch<br>
+            git pull origin main
+        </div>
+
+        <!-- extra useful commands -->
+        <hr>
+        <h2><i class="fas fa-tools"></i> Handy extras</h2>
+        <div class="grid-2col">
+            <div class="pill"><i class="fas fa-eye"></i> <code>git log</code> — view commit history</div>
+            <div class="pill"><i class="fas fa-undo"></i> <code>git reset</code> — undo stages / commits</div>
+            <div class="pill"><i class="fas fa-history"></i> <code>git diff</code> — see changes before staging</div>
+            <div class="pill"><i class="fas fa-tag"></i> <code>git tag</code> — mark releases</div>
+            <div class="pill"><i class="fas fa-code"></i> <code>git stash</code> — save uncommitted work temporarily</div>
+            <div class="pill"><i class="fas fa-globe"></i> <code>git remote -v</code> — list remotes</div>
+        </div>
+
+        <!-- .gitignore tip -->
+        <div style="background: #f0f4f8; border-radius: 30px; padding: 1.2rem 2rem; margin: 1.8rem 0 0.5rem;">
+            <p><i class="fas fa-file-alt" style="color:#f05138;"></i> <strong>.gitignore</strong> — create a <span class="inline-code">.gitignore</span> file to exclude temporary files, logs, node_modules, etc. from version control.</p>
+            <div class="code-block" style="margin: 0.5rem 0 0 0; background: #1e2b37cc;">
+                # .gitignore example<br>
+                node_modules/<br>
+                .env<br>
+                *.log<br>
+                dist/
+            </div>
+        </div>
+
+        <!-- learning next steps -->
+        <div style="margin-top: 2.2rem; background: #ffffffb0; border-radius: 40px; padding: 1.5rem 2rem; backdrop-filter: blur(4px);">
+            <p><i class="fas fa-graduation-cap" style="color:#f05138; font-size: 1.5rem; margin-right: 10px;"></i> 
+            <strong>Ready to go deeper?</strong> Explore <span class="inline-code">git branch --help</span>, interactive tutorials, or the official <a href="#" style="color:#f05138; text-decoration: none; border-bottom: 1px dotted #f05138;">Git documentation</a>.</p>
+            <p style="margin-top: 0.3rem; font-size: 0.95rem;"><i class="fas fa-lightbulb" style="color:#f7b731;"></i> Pro tip: Use <span class="inline-code">git log --oneline --graph</span> for a pretty commit tree.</p>
+        </div>
+
+        <div class="footer-note">
+            <span><i class="fab fa-git-square"></i> Git v2.40+</span>
+            <span><i class="fas fa-code"></i> open source · distributed</span>
+            <span><i class="fas fa-heart" style="color:#f05138;"></i> made for collaboration</span>
+        </div>
+    </div>
+</body>
+</html>
